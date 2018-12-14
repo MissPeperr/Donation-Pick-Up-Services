@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{ var user = await UserManager.GetUserAsync(User);}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -26,16 +31,34 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">DonationPickUpServices</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Donation Pick-Up Services</a>
             </div>
+            @if (user == null)
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="Id" asp-page="/Account/Register">Make a Donation</a></li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            }
+            else if (user.UserTypeId == 4)
+            {
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Items" asp-action="Create">Make a Donation</a></li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
+            }
+            else if (user.UserTypeId == 2)
+            {
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <partial name="_LoginPartial" />
+                </ul>
+            </div>
+            }
         </div>
     </nav>
 

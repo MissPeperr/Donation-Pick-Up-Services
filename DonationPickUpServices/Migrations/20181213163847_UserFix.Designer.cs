@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DonationPickUpServices.Data.Migrations
+namespace DonationPickUpServices.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181212170937_first")]
-    partial class first
+    [Migration("20181213163847_UserFix")]
+    partial class UserFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,9 +82,9 @@ namespace DonationPickUpServices.Data.Migrations
                     b.ToTable("Items");
 
                     b.HasData(
-                        new { ItemId = 1, ApplicationUserId = "720a80ca-6217-4759-924a-58c8036bd0c2", Description = "Size 7.5, never worn, brown leather booties", DonationId = 1, ItemTypeId = 3, Quantity = 1, Title = "Brown Booties", Weight = 1 },
-                        new { ItemId = 2, ApplicationUserId = "cb60afa5-d6b7-4773-8f49-b9d31f55a454", Description = "A 30\" Samsung TV, black, flat screen", DonationId = 2, ItemTypeId = 1, Quantity = 1, Title = "30\" Samsung TV", Weight = 20 },
-                        new { ItemId = 3, ApplicationUserId = "720a80ca-6217-4759-924a-58c8036bd0c2", Description = "A brown dresser with 4 drawers", DonationId = 3, ItemTypeId = 2, Quantity = 1, Title = "Dresser", Weight = 60 }
+                        new { ItemId = 1, ApplicationUserId = "7fa5cc70-2882-4a1c-9177-34f557d453da", Description = "Size 7.5, never worn, brown leather booties", DonationId = 1, ItemTypeId = 3, Quantity = 1, Title = "Brown Booties", Weight = 1 },
+                        new { ItemId = 2, ApplicationUserId = "4c0dec83-76fb-48f4-8f20-d0f0a28c0f6b", Description = "A 30\" Samsung TV, black, flat screen", DonationId = 2, ItemTypeId = 1, Quantity = 1, Title = "30\" Samsung TV", Weight = 20 },
+                        new { ItemId = 3, ApplicationUserId = "7fa5cc70-2882-4a1c-9177-34f557d453da", Description = "A brown dresser with 4 drawers", DonationId = 3, ItemTypeId = 2, Quantity = 1, Title = "Dresser", Weight = 60 }
                     );
                 });
 
@@ -354,10 +354,10 @@ namespace DonationPickUpServices.Data.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
 
                     b.HasData(
-                        new { Id = "452830a2-a348-4e1b-94b7-8f3b3f8330c0", AccessFailedCount = 0, ConcurrencyStamp = "cc0ca400-37d7-4662-9a59-673a550945bb", Email = "madisonpeper@gmail.com", EmailConfirmed = false, LockoutEnabled = false, PasswordHash = "AQAAAAEAACcQAAAAEO1yM8HMWc0OKegIUzqGIyQtJy0867s+7D/V2ThbFOTryVciE35AHbxwnDHuql24Qg==", PhoneNumberConfirmed = false, TwoFactorEnabled = false, Address = "1000 Nunya Business Dr", City = "Nashville", FirstName = "Madison", LastName = "Peper", State = "Tennessee", UserPhoneNumber = "6158122717", UserTypeId = 2, ZipCode = "37209" },
-                        new { Id = "cb60afa5-d6b7-4773-8f49-b9d31f55a454", AccessFailedCount = 0, ConcurrencyStamp = "e5dfca2c-3cdc-4f2d-8429-20449861b5a5", Email = "russell@nanney.com", EmailConfirmed = false, LockoutEnabled = false, PasswordHash = "AQAAAAEAACcQAAAAENyMPhJ6urPK6kYN3Pg169k2pZ+dDXtPBnURU5YC9RHBQDrstxu3z3WuTwZ0F1I6fQ==", PhoneNumberConfirmed = false, TwoFactorEnabled = false, Address = "2020 Nowhere Circle", City = "Nashville", FirstName = "Russell", LastName = "Nanney", State = "Tennessee", UserPhoneNumber = "6152098318", UserTypeId = 4, ZipCode = "37209" },
-                        new { Id = "720a80ca-6217-4759-924a-58c8036bd0c2", AccessFailedCount = 0, ConcurrencyStamp = "2fd368e1-7a0a-46a2-8c4f-50e4642bbf76", Email = "stephanie@risch.com", EmailConfirmed = false, LockoutEnabled = false, PasswordHash = "AQAAAAEAACcQAAAAED/dCDhRnAmpNk/88DetVRN0m/NfeDh85/8ks1+R1QbMqzGIOfUklKKBw4VzSH/YNQ==", PhoneNumberConfirmed = false, TwoFactorEnabled = false, Address = "1060 OuttaMy Way", City = "Nashville", FirstName = "Stephanie", LastName = "Risch", State = "Tennessee", UserPhoneNumber = "6151234567", UserTypeId = 4, ZipCode = "37221" },
-                        new { Id = "a14ec0d0-c55d-42f8-b607-81a8dcb71ffb", AccessFailedCount = 0, ConcurrencyStamp = "11a4703e-d865-4f30-b3b2-4b146c867cab", Email = "parker@kelley.com", EmailConfirmed = false, LockoutEnabled = false, PasswordHash = "AQAAAAEAACcQAAAAEKHgNuZWi5P5MxGR4y1+LvdN+rYM6SSZHxtVlanr3a1J8tX3CuNphUhWNW7m8wmX+w==", PhoneNumberConfirmed = false, TwoFactorEnabled = false, Address = "1509 Rainbow St", City = "Nashville", FirstName = "Parker", LastName = "Kelley", State = "Tennessee", UserPhoneNumber = "6150987654", UserTypeId = 2, ZipCode = "37212" }
+                        new { Id = "3257ad6f-b8fd-4fb9-8333-c86370147267", AccessFailedCount = 0, ConcurrencyStamp = "58171023-3aa0-4f92-89f6-b10774d9d14c", Email = "madisonpeper@gmail.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "MADISONPEPER@GMAIL.COM", NormalizedUserName = "MADISONPEPER@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAEKOP9Os72rewuyhHTOhuSp4YTgdcaaK02oa3P1OOH9bnlZ/DyK1Ib5VNuUkiQTLjaQ==", PhoneNumberConfirmed = false, SecurityStamp = "14ec913e-5197-45c2-bed2-a4ca7d783831", TwoFactorEnabled = false, UserName = "madisonpeper@gmail.com", Address = "1000 Nunya Business Dr", City = "Nashville", FirstName = "Madison", LastName = "Peper", State = "Tennessee", UserPhoneNumber = "6158122717", UserTypeId = 2, ZipCode = "37209" },
+                        new { Id = "4c0dec83-76fb-48f4-8f20-d0f0a28c0f6b", AccessFailedCount = 0, ConcurrencyStamp = "805645d4-6453-48fe-8d92-16b00015812b", Email = "russell@nanney.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "RUSSELL@NANNEY.COM", NormalizedUserName = "RUSSELL@NANNEY.COM", PasswordHash = "AQAAAAEAACcQAAAAEJ0EOxW0G9uVJwAC96k1VKTt8cK4Z284ozbvOSc8buXz51N8gbCHpmQ2RZ2O424ZHA==", PhoneNumberConfirmed = false, SecurityStamp = "ef8b4941-7289-4510-a006-4b47a1bc4dd6", TwoFactorEnabled = false, UserName = "russell@nanney.com", Address = "2020 Nowhere Circle", City = "Nashville", FirstName = "Russell", LastName = "Nanney", State = "Tennessee", UserPhoneNumber = "6152098318", UserTypeId = 4, ZipCode = "37209" },
+                        new { Id = "7fa5cc70-2882-4a1c-9177-34f557d453da", AccessFailedCount = 0, ConcurrencyStamp = "02235beb-07d6-45ff-978c-ce368f5474f3", Email = "stephanie@risch.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "STEPHANIE@RISCH.COM", NormalizedUserName = "STEPHANIE@RISCH.COM", PasswordHash = "AQAAAAEAACcQAAAAEBL42L+pqQvrPgXNHNDO0u5f0TX0c1IT0pzhnqnVeKJQMV6IAvhWWLqg1ihj118bpA==", PhoneNumberConfirmed = false, SecurityStamp = "fe2070d8-9397-44d9-abfa-c3ce7bf99736", TwoFactorEnabled = false, UserName = "stephanie@risch.com", Address = "1060 OuttaMy Way", City = "Nashville", FirstName = "Stephanie", LastName = "Risch", State = "Tennessee", UserPhoneNumber = "6151234567", UserTypeId = 4, ZipCode = "37221" },
+                        new { Id = "7686ff48-77e2-482b-bc9c-69166a74874c", AccessFailedCount = 0, ConcurrencyStamp = "8218ce81-206f-4e02-88fb-7772a692b95f", Email = "parker@kelley.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "PARKER@KELLEY.COM", NormalizedUserName = "PARKER@KELLEY.COM", PasswordHash = "AQAAAAEAACcQAAAAEEZ2DgLak8w0mjsPalsEdFjSjpfJGcSpI+DhUC3MvRiS8H+xsQ1m6xF/E9aRrcf1YQ==", PhoneNumberConfirmed = false, SecurityStamp = "9c7eb105-4e7f-4a68-af9d-220e86111a45", TwoFactorEnabled = false, UserName = "parker@kelley.com", Address = "1509 Rainbow St", City = "Nashville", FirstName = "Parker", LastName = "Kelley", State = "Tennessee", UserPhoneNumber = "6150987654", UserTypeId = 2, ZipCode = "37212" }
                     );
                 });
 

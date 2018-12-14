@@ -99,7 +99,8 @@ namespace DonationPickUpServices.Areas.Identity.Pages.Account
                     City = Input.City,
                     State = Input.State,
                     ZipCode = Input.ZipCode,
-                    PhoneNumber = Input.UserPhoneNumber
+                    PhoneNumber = Input.UserPhoneNumber,
+                    UserTypeId = 4
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

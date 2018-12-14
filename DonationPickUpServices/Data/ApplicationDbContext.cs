@@ -102,12 +102,18 @@ namespace DonationPickUpServices.Data
                 City = "Nashville",
                 State = "Tennessee",
                 ZipCode = "37209",
+                UserName = "madisonpeper@gmail.com",
+                NormalizedUserName = "MADISONPEPER@GMAIL.COM",
                 Email = "madisonpeper@gmail.com",
+                NormalizedEmail = "MADISONPEPER@GMAIL.COM",
                 UserPhoneNumber = "6158122717",
-                UserTypeId = 2
+                UserTypeId = 2,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString("D")
             };
             var passwordHash1 = new PasswordHasher<ApplicationUser>();
-            user1.PasswordHash = passwordHash1.HashPassword(user1, "password");
+            user1.PasswordHash = passwordHash1.HashPassword(user1, "Password!1");
             modelBuilder.Entity<ApplicationUser>().HasData(user1);
 
             ApplicationUser user2 = new ApplicationUser
@@ -118,12 +124,18 @@ namespace DonationPickUpServices.Data
                 City = "Nashville",
                 State = "Tennessee",
                 ZipCode = "37209",
+                UserName = "russell@nanney.com",
+                NormalizedUserName = "RUSSELL@NANNEY.COM",
                 Email = "russell@nanney.com",
+                NormalizedEmail = "RUSSELL@NANNEY.COM",
                 UserPhoneNumber = "6152098318",
-                UserTypeId = 4
+                UserTypeId = 4,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString("D")
             };
             var passwordHash2 = new PasswordHasher<ApplicationUser>();
-            user2.PasswordHash = passwordHash2.HashPassword(user2, "password");
+            user2.PasswordHash = passwordHash2.HashPassword(user2, "Password!1");
             modelBuilder.Entity<ApplicationUser>().HasData(user2);
 
             ApplicationUser user3 = new ApplicationUser
@@ -134,12 +146,18 @@ namespace DonationPickUpServices.Data
                 City = "Nashville",
                 State = "Tennessee",
                 ZipCode = "37221",
+                UserName = "stephanie@risch.com",
+                NormalizedUserName = "STEPHANIE@RISCH.COM",
                 Email = "stephanie@risch.com",
+                NormalizedEmail = "STEPHANIE@RISCH.COM",
                 UserPhoneNumber = "6151234567",
-                UserTypeId = 4
+                UserTypeId = 4,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString("D")
             };
             var passwordHash3 = new PasswordHasher<ApplicationUser>();
-            user3.PasswordHash = passwordHash3.HashPassword(user3, "password");
+            user3.PasswordHash = passwordHash3.HashPassword(user3, "Password!1");
             modelBuilder.Entity<ApplicationUser>().HasData(user3);
 
             ApplicationUser user4 = new ApplicationUser
@@ -150,12 +168,18 @@ namespace DonationPickUpServices.Data
                 City = "Nashville",
                 State = "Tennessee",
                 ZipCode = "37212",
+                UserName = "parker@kelley.com",
+                NormalizedUserName = "PARKER@KELLEY.COM",
                 Email = "parker@kelley.com",
+                NormalizedEmail = "PARKER@KELLEY.COM",
                 UserPhoneNumber = "6150987654",
-                UserTypeId = 2
+                UserTypeId = 2,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString("D")
             };
             var passwordHash4 = new PasswordHasher<ApplicationUser>();
-            user4.PasswordHash = passwordHash4.HashPassword(user4, "password");
+            user4.PasswordHash = passwordHash4.HashPassword(user4, "Password!1");
             modelBuilder.Entity<ApplicationUser>().HasData(user4);
 
             modelBuilder.Entity<Donation>().HasData(
