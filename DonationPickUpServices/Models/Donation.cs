@@ -19,7 +19,7 @@ namespace DonationPickUpServices.Models
         public DateTime DateCreated { get; set; }
 
         [DataType(DataType.Date)]
-        [Display(Description = "Date Completed")]
+        [Display(Name = "Date Completed")]
         public DateTime? DateCompleted { get; set; }
 
         [Required]

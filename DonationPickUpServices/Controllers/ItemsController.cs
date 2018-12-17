@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DonationPickUpServices.Data;
 using DonationPickUpServices.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DonationPickUpServices.Controllers
 {
@@ -14,10 +15,17 @@ namespace DonationPickUpServices.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ItemsController(ApplicationDbContext context)
+        public ItemsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
+
+        // Create variable to represent User Data
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        // Create component to get current user from the _userManager variable
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Items
         public async Task<IActionResult> Index()
@@ -162,6 +170,39 @@ namespace DonationPickUpServices.Controllers
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // write a method to create a donation & post the item
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateItemDonation(Item item)
+        {
+            var user = await GetCurrentUserAsync();
+
+            // removing the UserId and DonationId from the ModelState so the ModelState is Valid
+            ModelState.Remove("ApplicationUserId");
+            ModelState.Remove("ApplicationUser");
+            ModelState.Remove("DonationId");
+
+            if (ModelState.IsValid)
+            {
+                Donation newDonation = new Donation
+                {
+                    ApplicationUserId = user.Id,
+                    ApplicationUser = user,
+                    StatusId = 1
+                };
+                _context.Add(newDonation);
+
+                item.ApplicationUser = user;
+                item.ApplicationUserId = user.Id;
+                item.DonationId = newDonation.DonationId;
+                _context.Add(item);
+
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index", "Donations");
         }
 
         private bool ItemExists(int id)
