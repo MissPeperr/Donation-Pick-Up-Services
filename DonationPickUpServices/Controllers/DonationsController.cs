@@ -50,6 +50,7 @@ namespace DonationPickUpServices.Controllers
             else if(user.UserTypeId == 4)
             {
                 var allItems = _context.Items
+                    .Include(i => i.ItemType)
                     .Include(i => i.Donation)
                     .Include(i => i.ApplicationUser)
                     .Where(i => i.ApplicationUserId == user.Id);
@@ -63,9 +64,9 @@ namespace DonationPickUpServices.Controllers
                 {
                     donations.Add(item.Donation);
                 }
-                //viewModel.Donations = donations;
+                viewModel.CustDonations = donations;
 
-                return View(donations);
+                return View(viewModel);
             }
             return View("../Home/CustomerIndex");
         }

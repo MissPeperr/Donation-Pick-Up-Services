@@ -24,39 +24,51 @@
                     @Html.DisplayNameFor(model => model.Donation.Status)
                 </th>
                 <th>
+                    Category
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => user.Address)
                 </th>
             </tr>
         </thead>
         <tbody>
-                @foreach (var donation in Model.Donations)
+                @foreach (var donation in Model.CustDonations)
                 {
-                    <tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => donation.DateCreated)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => donation.Status.Title)
+                </td>
+
+                @foreach (var j in donation.Items)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => j.ItemType.Title)
+                    </td>
+
+                    @if (donation.ApplicationUserId == user.Id)
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => donation.DateCreated)
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.Address) <br />
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.City),
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.State) <br />
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.ZipCode)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => donation.Status.Title)
-                        </td>
-                        @foreach (var j in donation.Items)
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => j.ItemType.Title)
-                            </td>
-                        }
-                        <td>
-                            @Html.DisplayFor(modelItem => user.Address) <br />
-                            @Html.DisplayFor(modelItem => user.City),
-                            @Html.DisplayFor(modelItem => user.State) <br />
-                            @Html.DisplayFor(modelItem => user.ZipCode)
-                        </td>
-                        <td></td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@donation.DonationId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@donation.DonationId">Delete</a>
-                        </td>
-                    </tr>
+                    }
+                }
+                <td></td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a> |
+                    @if(donation.StatusId == 1)
+                    {
+                        <a asp-action="Delete" asp-route-id="@donation.DonationId">Cancel</a>
+                    }
+                </td>
+            </tr>
 
                 }
         </tbody>
