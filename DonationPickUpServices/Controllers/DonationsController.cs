@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DonationPickUpServices.Data;
 using DonationPickUpServices.Models;
 using Microsoft.AspNetCore.Identity;
+using DonationPickUpServices.Models.ViewModels.DonationViewModels;
 
 namespace DonationPickUpServices.Controllers
 {
@@ -30,36 +31,43 @@ namespace DonationPickUpServices.Controllers
         // GET: Donations
         public async Task<IActionResult> Index()
         {
+            DonationIndexViewModel viewModel = new DonationIndexViewModel();
             var user = await GetCurrentUserAsync();
+
             if(user == null)
             {
                 return View("../Home/CustomerIndex");
-            } else if(user.UserTypeId == 2)
+            }
+            else if(user.UserTypeId == 2)
             {
-                var applicationDbContext = _context.Donations
-                    .Include(d => d.Status);
-                return View(await applicationDbContext.ToListAsync());
-            } else if(user.UserTypeId == 4)
-            {
-                var applicationDbContext = _context.Donations
+                List<Donation> allDonations = _context.Donations
                     .Include(d => d.Status)
-                    .Include(d => d.Items)
                     .ToList();
 
-                foreach (var donation in applicationDbContext)
-                {
-                    foreach(var item in donation.Items)
-                    {
-                        if(item.ApplicationUserId == user.Id)
-                        {
-                            var userId = item.ApplicationUserId;
-
-                        }
-                    }
-                }
-                return View(applicationDbContext);
+                viewModel.Donations = allDonations;
+                return View(viewModel);
             }
-            return View("../Home/Index");
+            else if(user.UserTypeId == 4)
+            {
+                var allItems = _context.Items
+                    .Include(i => i.Donation)
+                    .Include(i => i.ApplicationUser)
+                    .Where(i => i.ApplicationUserId == user.Id);
+
+                List<Donation> allDonations = _context.Donations
+                    .Include(d => d.Status)
+                    .ToList();
+
+                var donations = new HashSet<Donation>();
+                foreach (var item in allItems)
+                {
+                    donations.Add(item.Donation);
+                }
+                //viewModel.Donations = donations;
+
+                return View(donations);
+            }
+            return View("../Home/CustomerIndex");
         }
 
         // GET: Donations/Details/5
@@ -75,7 +83,7 @@ namespace DonationPickUpServices.Controllers
                 .FirstOrDefaultAsync(m => m.DonationId == id);
             if (donation == null)
             {
-                return NotFound();
+                return NotFound(); 
             }
 
             return View(donation);

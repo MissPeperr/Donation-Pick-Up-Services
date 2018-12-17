@@ -36,9 +36,6 @@
             @if (user == null)
             {
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a asp-area="Id" asp-page="/Account/Register">Make a Donation</a></li>
-                    </ul>
                     <partial name="_LoginPartial" />
                 </div>
             }
@@ -54,9 +51,7 @@
             else if (user.UserTypeId == 2)
             {
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <partial name="_LoginPartial" />
-                </ul>
+                <partial name="_LoginPartial" />
             </div>
             }
         </div>

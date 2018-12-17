@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DonationPickUpServices.Migrations
 {
-    public partial class UserFix : Migration
+    public partial class UserIdDonation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -79,27 +79,6 @@ namespace DonationPickUpServices.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Donations",
-                columns: table => new
-                {
-                    DonationId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
-                    DateCompleted = table.Column<DateTime>(nullable: true),
-                    StatusId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Donations", x => x.DonationId);
-                    table.ForeignKey(
-                        name: "FK_Donations_Statuses_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "Statuses",
-                        principalColumn: "StatusId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -229,6 +208,34 @@ namespace DonationPickUpServices.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Donations",
+                columns: table => new
+                {
+                    DonationId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
+                    DateCompleted = table.Column<DateTime>(nullable: true),
+                    StatusId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Donations", x => x.DonationId);
+                    table.ForeignKey(
+                        name: "FK_Donations_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Donations_Statuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Statuses",
+                        principalColumn: "StatusId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Items",
                 columns: table => new
                 {
@@ -256,7 +263,7 @@ namespace DonationPickUpServices.Migrations
                         column: x => x.DonationId,
                         principalTable: "Donations",
                         principalColumn: "DonationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Items_ItemTypes_ItemTypeId",
                         column: x => x.ItemTypeId,
@@ -302,36 +309,41 @@ namespace DonationPickUpServices.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Address", "City", "FirstName", "LastName", "State", "UserPhoneNumber", "UserTypeId", "ZipCode" },
                 values: new object[,]
                 {
-                    { "3257ad6f-b8fd-4fb9-8333-c86370147267", 0, "58171023-3aa0-4f92-89f6-b10774d9d14c", "ApplicationUser", "madisonpeper@gmail.com", true, false, null, "MADISONPEPER@GMAIL.COM", "MADISONPEPER@GMAIL.COM", "AQAAAAEAACcQAAAAEKOP9Os72rewuyhHTOhuSp4YTgdcaaK02oa3P1OOH9bnlZ/DyK1Ib5VNuUkiQTLjaQ==", null, false, "14ec913e-5197-45c2-bed2-a4ca7d783831", false, "madisonpeper@gmail.com", "1000 Nunya Business Dr", "Nashville", "Madison", "Peper", "Tennessee", "6158122717", 2, "37209" },
-                    { "7686ff48-77e2-482b-bc9c-69166a74874c", 0, "8218ce81-206f-4e02-88fb-7772a692b95f", "ApplicationUser", "parker@kelley.com", true, false, null, "PARKER@KELLEY.COM", "PARKER@KELLEY.COM", "AQAAAAEAACcQAAAAEEZ2DgLak8w0mjsPalsEdFjSjpfJGcSpI+DhUC3MvRiS8H+xsQ1m6xF/E9aRrcf1YQ==", null, false, "9c7eb105-4e7f-4a68-af9d-220e86111a45", false, "parker@kelley.com", "1509 Rainbow St", "Nashville", "Parker", "Kelley", "Tennessee", "6150987654", 2, "37212" },
-                    { "4c0dec83-76fb-48f4-8f20-d0f0a28c0f6b", 0, "805645d4-6453-48fe-8d92-16b00015812b", "ApplicationUser", "russell@nanney.com", true, false, null, "RUSSELL@NANNEY.COM", "RUSSELL@NANNEY.COM", "AQAAAAEAACcQAAAAEJ0EOxW0G9uVJwAC96k1VKTt8cK4Z284ozbvOSc8buXz51N8gbCHpmQ2RZ2O424ZHA==", null, false, "ef8b4941-7289-4510-a006-4b47a1bc4dd6", false, "russell@nanney.com", "2020 Nowhere Circle", "Nashville", "Russell", "Nanney", "Tennessee", "6152098318", 4, "37209" },
-                    { "7fa5cc70-2882-4a1c-9177-34f557d453da", 0, "02235beb-07d6-45ff-978c-ce368f5474f3", "ApplicationUser", "stephanie@risch.com", true, false, null, "STEPHANIE@RISCH.COM", "STEPHANIE@RISCH.COM", "AQAAAAEAACcQAAAAEBL42L+pqQvrPgXNHNDO0u5f0TX0c1IT0pzhnqnVeKJQMV6IAvhWWLqg1ihj118bpA==", null, false, "fe2070d8-9397-44d9-abfa-c3ce7bf99736", false, "stephanie@risch.com", "1060 OuttaMy Way", "Nashville", "Stephanie", "Risch", "Tennessee", "6151234567", 4, "37221" }
+                    { "9c9ed096-1c65-4d8b-a4ae-976bd15718bd", 0, "bf09bf7f-4c01-47a9-ac38-1860d73cabee", "ApplicationUser", "madisonpeper@gmail.com", true, false, null, "MADISONPEPER@GMAIL.COM", "MADISONPEPER@GMAIL.COM", "AQAAAAEAACcQAAAAED1il+d8dKosGy6ZhNRtThC0Zsq5zvUY/UVXnaC/Z1OMRdXWZkxRlOoH4l6GMeV8+w==", null, false, "e1710211-d47b-424d-9ed1-5c9dd280cafd", false, "madisonpeper@gmail.com", "1000 Nunya Business Dr", "Nashville", "Madison", "Peper", "Tennessee", "6158122717", 2, "37209" },
+                    { "a8798c4e-79fc-4bc7-aa5b-cc00b467cca1", 0, "85756740-6573-4b1d-9213-cdbef851d171", "ApplicationUser", "parker@kelley.com", true, false, null, "PARKER@KELLEY.COM", "PARKER@KELLEY.COM", "AQAAAAEAACcQAAAAEMXQk22ebTH9qqM6O6SBX4S5R4icCc9yAcJ4W8noywpTUMx/icgbae/AJA+akLR38w==", null, false, "e2ea396c-357d-410e-bdd6-f27f8be746cb", false, "parker@kelley.com", "1509 Rainbow St", "Nashville", "Parker", "Kelley", "Tennessee", "6150987654", 2, "37212" },
+                    { "9cd0a1f4-288c-43ae-97c9-67fef17dedbe", 0, "482abde8-d578-4a59-8b91-fd21c2cae678", "ApplicationUser", "russell@nanney.com", true, false, null, "RUSSELL@NANNEY.COM", "RUSSELL@NANNEY.COM", "AQAAAAEAACcQAAAAEOS1uB7IqsoxODwWJiIE+AnsBO+Hj/YlWjZVoDQ9M2qxN1KX6iRE0g423FzyTfWPIg==", null, false, "8fb698be-33e6-4dd9-8eee-dcbdabea8cbc", false, "russell@nanney.com", "2020 Nowhere Circle", "Nashville", "Russell", "Nanney", "Tennessee", "6152098318", 4, "37209" },
+                    { "83b272fa-5568-495c-a8fa-e226b760ad0d", 0, "4c8c3be0-cb81-4292-a940-57290f70471b", "ApplicationUser", "stephanie@risch.com", true, false, null, "STEPHANIE@RISCH.COM", "STEPHANIE@RISCH.COM", "AQAAAAEAACcQAAAAEIOQGRUMH85XUqDqqaq7uNP28avmG+yLmkZehVYY6afOWFWeN6T+SMgeQo1Gi8NSSw==", null, false, "1baaa719-c44a-455e-86f4-0e91113e1643", false, "stephanie@risch.com", "1060 OuttaMy Way", "Nashville", "Stephanie", "Risch", "Tennessee", "6151234567", 4, "37221" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Donations",
-                columns: new[] { "DonationId", "DateCompleted", "DateCreated", "StatusId" },
-                values: new object[,]
-                {
-                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 }
-                });
+                columns: new[] { "DonationId", "ApplicationUserId", "DateCompleted", "DateCreated", "StatusId" },
+                values: new object[] { 2, "9cd0a1f4-288c-43ae-97c9-67fef17dedbe", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 });
+
+            migrationBuilder.InsertData(
+                table: "Donations",
+                columns: new[] { "DonationId", "ApplicationUserId", "DateCompleted", "DateCreated", "StatusId" },
+                values: new object[] { 1, "83b272fa-5568-495c-a8fa-e226b760ad0d", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 });
+
+            migrationBuilder.InsertData(
+                table: "Donations",
+                columns: new[] { "DonationId", "ApplicationUserId", "DateCompleted", "DateCreated", "StatusId" },
+                values: new object[] { 3, "83b272fa-5568-495c-a8fa-e226b760ad0d", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 });
 
             migrationBuilder.InsertData(
                 table: "Items",
                 columns: new[] { "ItemId", "ApplicationUserId", "Description", "DonationId", "ItemTypeId", "Quantity", "Title", "Weight" },
-                values: new object[] { 2, "4c0dec83-76fb-48f4-8f20-d0f0a28c0f6b", "A 30\" Samsung TV, black, flat screen", 2, 1, 1, "30\" Samsung TV", 20 });
+                values: new object[] { 2, "9cd0a1f4-288c-43ae-97c9-67fef17dedbe", "A 30\" Samsung TV, black, flat screen", 2, 1, 1, "30\" Samsung TV", 20 });
 
             migrationBuilder.InsertData(
                 table: "Items",
                 columns: new[] { "ItemId", "ApplicationUserId", "Description", "DonationId", "ItemTypeId", "Quantity", "Title", "Weight" },
-                values: new object[] { 1, "7fa5cc70-2882-4a1c-9177-34f557d453da", "Size 7.5, never worn, brown leather booties", 1, 3, 1, "Brown Booties", 1 });
+                values: new object[] { 1, "83b272fa-5568-495c-a8fa-e226b760ad0d", "Size 7.5, never worn, brown leather booties", 1, 3, 1, "Brown Booties", 1 });
 
             migrationBuilder.InsertData(
                 table: "Items",
                 columns: new[] { "ItemId", "ApplicationUserId", "Description", "DonationId", "ItemTypeId", "Quantity", "Title", "Weight" },
-                values: new object[] { 3, "7fa5cc70-2882-4a1c-9177-34f557d453da", "A brown dresser with 4 drawers", 3, 2, 1, "Dresser", 60 });
+                values: new object[] { 3, "83b272fa-5568-495c-a8fa-e226b760ad0d", "A brown dresser with 4 drawers", 3, 2, 1, "Dresser", 60 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -378,6 +390,11 @@ namespace DonationPickUpServices.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Donations_ApplicationUserId",
+                table: "Donations",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Donations_StatusId",
                 table: "Donations",
                 column: "StatusId");
@@ -422,19 +439,19 @@ namespace DonationPickUpServices.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Donations");
 
             migrationBuilder.DropTable(
                 name: "ItemTypes");
 
             migrationBuilder.DropTable(
-                name: "UserTypes");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Statuses");
+
+            migrationBuilder.DropTable(
+                name: "UserTypes");
         }
     }
 }

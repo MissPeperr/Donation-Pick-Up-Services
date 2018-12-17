@@ -187,19 +187,22 @@ namespace DonationPickUpServices.Data
                 {
                     DonationId = 1,
                     DateCompleted = null,
-                    StatusId = 2
+                    StatusId = 2,
+                    ApplicationUserId = user3.Id
                 },
                 new Donation()
                 {
                     DonationId = 2,
                     DateCompleted = null,
-                    StatusId = 1
+                    StatusId = 1,
+                    ApplicationUserId = user2.Id
                 },
                 new Donation()
                 {
                     DonationId = 3,
                     DateCompleted = null,
-                    StatusId = 1
+                    StatusId = 1,
+                    ApplicationUserId = user3.Id
                 }
             );
 
