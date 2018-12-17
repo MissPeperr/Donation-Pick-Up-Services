@@ -36,7 +36,7 @@ namespace DonationPickUpServices.Controllers
 
             if(user == null)
             {
-                return View("../Home/CustomerIndex");
+                return View("../Home/LoginError");
             }
             else if(user.UserTypeId == 2)
             {
@@ -68,7 +68,7 @@ namespace DonationPickUpServices.Controllers
 
                 return View(viewModel);
             }
-            return View("../Home/CustomerIndex");
+            return View("../Home/LoginError");
         }
 
         // GET: Donations/Details/5
