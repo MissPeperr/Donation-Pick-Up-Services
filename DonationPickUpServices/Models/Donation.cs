@@ -19,12 +19,19 @@ namespace DonationPickUpServices.Models
         public DateTime DateCreated { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Description = "Date Completed")]
         public DateTime? DateCompleted { get; set; }
 
         [Required]
         public int StatusId { get; set; }
 
         public Status Status { get; set; }
+
+        [Required]
+        public string ApplicationUserId { get; set; }
+
+        [Required]
+        public ApplicationUser ApplicationUser { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
     }

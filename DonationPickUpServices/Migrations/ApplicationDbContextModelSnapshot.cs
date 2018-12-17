@@ -4,16 +4,14 @@ using DonationPickUpServices.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DonationPickUpServices.Data.Migrations
+namespace DonationPickUpServices.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181212170937_first")]
-    partial class first
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +25,9 @@ namespace DonationPickUpServices.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired();
+
                     b.Property<DateTime?>("DateCompleted");
 
                     b.Property<DateTime>("DateCreated")
@@ -37,14 +38,16 @@ namespace DonationPickUpServices.Data.Migrations
 
                     b.HasKey("DonationId");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("StatusId");
 
                     b.ToTable("Donations");
 
                     b.HasData(
-                        new { DonationId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), StatusId = 2 },
-                        new { DonationId = 2, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), StatusId = 1 },
-                        new { DonationId = 3, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), StatusId = 1 }
+                        new { DonationId = 1, ApplicationUserId = "83b272fa-5568-495c-a8fa-e226b760ad0d", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), StatusId = 2 },
+                        new { DonationId = 2, ApplicationUserId = "9cd0a1f4-288c-43ae-97c9-67fef17dedbe", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), StatusId = 1 },
+                        new { DonationId = 3, ApplicationUserId = "83b272fa-5568-495c-a8fa-e226b760ad0d", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), StatusId = 1 }
                     );
                 });
 
@@ -82,9 +85,9 @@ namespace DonationPickUpServices.Data.Migrations
                     b.ToTable("Items");
 
                     b.HasData(
-                        new { ItemId = 1, ApplicationUserId = "720a80ca-6217-4759-924a-58c8036bd0c2", Description = "Size 7.5, never worn, brown leather booties", DonationId = 1, ItemTypeId = 3, Quantity = 1, Title = "Brown Booties", Weight = 1 },
-                        new { ItemId = 2, ApplicationUserId = "cb60afa5-d6b7-4773-8f49-b9d31f55a454", Description = "A 30\" Samsung TV, black, flat screen", DonationId = 2, ItemTypeId = 1, Quantity = 1, Title = "30\" Samsung TV", Weight = 20 },
-                        new { ItemId = 3, ApplicationUserId = "720a80ca-6217-4759-924a-58c8036bd0c2", Description = "A brown dresser with 4 drawers", DonationId = 3, ItemTypeId = 2, Quantity = 1, Title = "Dresser", Weight = 60 }
+                        new { ItemId = 1, ApplicationUserId = "83b272fa-5568-495c-a8fa-e226b760ad0d", Description = "Size 7.5, never worn, brown leather booties", DonationId = 1, ItemTypeId = 3, Quantity = 1, Title = "Brown Booties", Weight = 1 },
+                        new { ItemId = 2, ApplicationUserId = "9cd0a1f4-288c-43ae-97c9-67fef17dedbe", Description = "A 30\" Samsung TV, black, flat screen", DonationId = 2, ItemTypeId = 1, Quantity = 1, Title = "30\" Samsung TV", Weight = 20 },
+                        new { ItemId = 3, ApplicationUserId = "83b272fa-5568-495c-a8fa-e226b760ad0d", Description = "A brown dresser with 4 drawers", DonationId = 3, ItemTypeId = 2, Quantity = 1, Title = "Dresser", Weight = 60 }
                     );
                 });
 
@@ -354,15 +357,20 @@ namespace DonationPickUpServices.Data.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
 
                     b.HasData(
-                        new { Id = "452830a2-a348-4e1b-94b7-8f3b3f8330c0", AccessFailedCount = 0, ConcurrencyStamp = "cc0ca400-37d7-4662-9a59-673a550945bb", Email = "madisonpeper@gmail.com", EmailConfirmed = false, LockoutEnabled = false, PasswordHash = "AQAAAAEAACcQAAAAEO1yM8HMWc0OKegIUzqGIyQtJy0867s+7D/V2ThbFOTryVciE35AHbxwnDHuql24Qg==", PhoneNumberConfirmed = false, TwoFactorEnabled = false, Address = "1000 Nunya Business Dr", City = "Nashville", FirstName = "Madison", LastName = "Peper", State = "Tennessee", UserPhoneNumber = "6158122717", UserTypeId = 2, ZipCode = "37209" },
-                        new { Id = "cb60afa5-d6b7-4773-8f49-b9d31f55a454", AccessFailedCount = 0, ConcurrencyStamp = "e5dfca2c-3cdc-4f2d-8429-20449861b5a5", Email = "russell@nanney.com", EmailConfirmed = false, LockoutEnabled = false, PasswordHash = "AQAAAAEAACcQAAAAENyMPhJ6urPK6kYN3Pg169k2pZ+dDXtPBnURU5YC9RHBQDrstxu3z3WuTwZ0F1I6fQ==", PhoneNumberConfirmed = false, TwoFactorEnabled = false, Address = "2020 Nowhere Circle", City = "Nashville", FirstName = "Russell", LastName = "Nanney", State = "Tennessee", UserPhoneNumber = "6152098318", UserTypeId = 4, ZipCode = "37209" },
-                        new { Id = "720a80ca-6217-4759-924a-58c8036bd0c2", AccessFailedCount = 0, ConcurrencyStamp = "2fd368e1-7a0a-46a2-8c4f-50e4642bbf76", Email = "stephanie@risch.com", EmailConfirmed = false, LockoutEnabled = false, PasswordHash = "AQAAAAEAACcQAAAAED/dCDhRnAmpNk/88DetVRN0m/NfeDh85/8ks1+R1QbMqzGIOfUklKKBw4VzSH/YNQ==", PhoneNumberConfirmed = false, TwoFactorEnabled = false, Address = "1060 OuttaMy Way", City = "Nashville", FirstName = "Stephanie", LastName = "Risch", State = "Tennessee", UserPhoneNumber = "6151234567", UserTypeId = 4, ZipCode = "37221" },
-                        new { Id = "a14ec0d0-c55d-42f8-b607-81a8dcb71ffb", AccessFailedCount = 0, ConcurrencyStamp = "11a4703e-d865-4f30-b3b2-4b146c867cab", Email = "parker@kelley.com", EmailConfirmed = false, LockoutEnabled = false, PasswordHash = "AQAAAAEAACcQAAAAEKHgNuZWi5P5MxGR4y1+LvdN+rYM6SSZHxtVlanr3a1J8tX3CuNphUhWNW7m8wmX+w==", PhoneNumberConfirmed = false, TwoFactorEnabled = false, Address = "1509 Rainbow St", City = "Nashville", FirstName = "Parker", LastName = "Kelley", State = "Tennessee", UserPhoneNumber = "6150987654", UserTypeId = 2, ZipCode = "37212" }
+                        new { Id = "9c9ed096-1c65-4d8b-a4ae-976bd15718bd", AccessFailedCount = 0, ConcurrencyStamp = "bf09bf7f-4c01-47a9-ac38-1860d73cabee", Email = "madisonpeper@gmail.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "MADISONPEPER@GMAIL.COM", NormalizedUserName = "MADISONPEPER@GMAIL.COM", PasswordHash = "AQAAAAEAACcQAAAAED1il+d8dKosGy6ZhNRtThC0Zsq5zvUY/UVXnaC/Z1OMRdXWZkxRlOoH4l6GMeV8+w==", PhoneNumberConfirmed = false, SecurityStamp = "e1710211-d47b-424d-9ed1-5c9dd280cafd", TwoFactorEnabled = false, UserName = "madisonpeper@gmail.com", Address = "1000 Nunya Business Dr", City = "Nashville", FirstName = "Madison", LastName = "Peper", State = "Tennessee", UserPhoneNumber = "6158122717", UserTypeId = 2, ZipCode = "37209" },
+                        new { Id = "9cd0a1f4-288c-43ae-97c9-67fef17dedbe", AccessFailedCount = 0, ConcurrencyStamp = "482abde8-d578-4a59-8b91-fd21c2cae678", Email = "russell@nanney.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "RUSSELL@NANNEY.COM", NormalizedUserName = "RUSSELL@NANNEY.COM", PasswordHash = "AQAAAAEAACcQAAAAEOS1uB7IqsoxODwWJiIE+AnsBO+Hj/YlWjZVoDQ9M2qxN1KX6iRE0g423FzyTfWPIg==", PhoneNumberConfirmed = false, SecurityStamp = "8fb698be-33e6-4dd9-8eee-dcbdabea8cbc", TwoFactorEnabled = false, UserName = "russell@nanney.com", Address = "2020 Nowhere Circle", City = "Nashville", FirstName = "Russell", LastName = "Nanney", State = "Tennessee", UserPhoneNumber = "6152098318", UserTypeId = 4, ZipCode = "37209" },
+                        new { Id = "83b272fa-5568-495c-a8fa-e226b760ad0d", AccessFailedCount = 0, ConcurrencyStamp = "4c8c3be0-cb81-4292-a940-57290f70471b", Email = "stephanie@risch.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "STEPHANIE@RISCH.COM", NormalizedUserName = "STEPHANIE@RISCH.COM", PasswordHash = "AQAAAAEAACcQAAAAEIOQGRUMH85XUqDqqaq7uNP28avmG+yLmkZehVYY6afOWFWeN6T+SMgeQo1Gi8NSSw==", PhoneNumberConfirmed = false, SecurityStamp = "1baaa719-c44a-455e-86f4-0e91113e1643", TwoFactorEnabled = false, UserName = "stephanie@risch.com", Address = "1060 OuttaMy Way", City = "Nashville", FirstName = "Stephanie", LastName = "Risch", State = "Tennessee", UserPhoneNumber = "6151234567", UserTypeId = 4, ZipCode = "37221" },
+                        new { Id = "a8798c4e-79fc-4bc7-aa5b-cc00b467cca1", AccessFailedCount = 0, ConcurrencyStamp = "85756740-6573-4b1d-9213-cdbef851d171", Email = "parker@kelley.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "PARKER@KELLEY.COM", NormalizedUserName = "PARKER@KELLEY.COM", PasswordHash = "AQAAAAEAACcQAAAAEMXQk22ebTH9qqM6O6SBX4S5R4icCc9yAcJ4W8noywpTUMx/icgbae/AJA+akLR38w==", PhoneNumberConfirmed = false, SecurityStamp = "e2ea396c-357d-410e-bdd6-f27f8be746cb", TwoFactorEnabled = false, UserName = "parker@kelley.com", Address = "1509 Rainbow St", City = "Nashville", FirstName = "Parker", LastName = "Kelley", State = "Tennessee", UserPhoneNumber = "6150987654", UserTypeId = 2, ZipCode = "37212" }
                     );
                 });
 
             modelBuilder.Entity("DonationPickUpServices.Models.Donation", b =>
                 {
+                    b.HasOne("DonationPickUpServices.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("DonationPickUpServices.Models.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
