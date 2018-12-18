@@ -16,6 +16,7 @@ namespace DonationPickUpServices.Models
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         [DataType(DataType.Date)]
