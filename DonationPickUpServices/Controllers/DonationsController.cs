@@ -221,5 +221,28 @@ namespace DonationPickUpServices.Controllers
 
             return View(donation);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelConfirm(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var donation = await _context.Donations
+                .Include(d => d.Status)
+                .FirstOrDefaultAsync(d => d.DonationId == id);
+            donation.StatusId = 4;
+            _context.Update(donation);
+
+            if (donation == null)
+            {
+                return NotFound();
+            }
+            await _context.SaveChangesAsync();
+            return View("CancelSuccess");
+        }
     }
 }

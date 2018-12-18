@@ -44,5 +44,8 @@
 </div>
 <div>
     <a class="btn btn-default" asp-action="Index"><i class="fas fa-arrow-left"></i>  Back to Donations</a>  |
-    <a class="btn btn-danger" asp-action="Cancel" asp-route-id="@Model.DonationId">Cancel</a>
+    @if(Model.StatusId == 1)
+    {
+        <a class="btn btn-danger" asp-action="Cancel" asp-route-id="@Model.DonationId">Cancel</a>
+    }
 </div>

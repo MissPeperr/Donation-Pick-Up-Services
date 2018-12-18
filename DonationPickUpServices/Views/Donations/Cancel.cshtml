@@ -10,9 +10,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Cancel">
+        <form asp-action="CancelConfirm" asp-route-id="@Model.DonationId">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DonationId" />
             <dl class="dl-horizontal">
                 <dt>
                     @Html.DisplayNameFor(model => model.DateCreated)
