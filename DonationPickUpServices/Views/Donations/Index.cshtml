@@ -62,10 +62,10 @@
                 }
                 <td></td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a> |
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@donation.DonationId">Details</a> |
                     @if(donation.StatusId == 1)
                     {
-                        <a asp-action="Delete" asp-route-id="@donation.DonationId">Cancel</a>
+                        <a class="btn btn-danger" asp-action="Cancel" asp-route-id="@donation.DonationId">Cancel</a>
                     }
                 </td>
             </tr>
@@ -121,9 +121,8 @@ else if (user.UserTypeId == 2)
                 }
                 <td></td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@donation.DonationId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@donation.DonationId">Delete</a>
+                    @* This will be how the employee changes the status, on Donations/Details *@
+                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
                 </td>
             </tr>
 
