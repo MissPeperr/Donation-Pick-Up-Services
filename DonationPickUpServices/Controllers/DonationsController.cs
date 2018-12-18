@@ -202,5 +202,47 @@ namespace DonationPickUpServices.Controllers
         {
             return _context.Donations.Any(e => e.DonationId == id);
         }
+
+        public async Task<IActionResult> Cancel(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var donation = await _context.Donations
+                .Include(d => d.Status)
+                .Include(d => d.Items)
+                .FirstOrDefaultAsync(m => m.DonationId == id);
+            if (donation == null)
+            {
+                return NotFound();
+            }
+
+            return View(donation);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelConfirm(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var donation = await _context.Donations
+                .Include(d => d.Status)
+                .FirstOrDefaultAsync(d => d.DonationId == id);
+            donation.StatusId = 4;
+            _context.Update(donation);
+
+            if (donation == null)
+            {
+                return NotFound();
+            }
+            await _context.SaveChangesAsync();
+            return View("CancelSuccess");
+        }
     }
 }
