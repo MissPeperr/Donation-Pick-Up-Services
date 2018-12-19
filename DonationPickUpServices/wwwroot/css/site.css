@@ -3,7 +3,12 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #4C6EA6;
 }
+
+/*.navbar {
+    background-color: aliceblue;
+}*/
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -12,16 +17,15 @@ body {
     padding-right: 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
+    .body-content footer {
+        background-color: #DB8EBF;
+        width: 100%;
+        margin-top: 5rem;
+        left: 0;
+        bottom: 0;
+        position: fixed;
+    }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
 
 /* QR code generator */
 #qrCode {
@@ -55,7 +59,7 @@ body {
     }
 
     .index-content .card {
-        background-color: #FFFFFF;
+        background-color: #FBFCFC;
         padding: 0;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
@@ -69,25 +73,10 @@ body {
         }
 
         .index-content .card h4 {
+            color: #4C6EA6;
             margin: 20px;
             padding: 2rem;
         }
-
-
-    .index-content .blue-button {
-        width: 100px;
-        -webkit-transition: background-color 1s, color 1s; /* For Safari 3.1 to 6.0 */
-        transition: background-color 1s, color 1s;
-        min-height: 20px;
-        background-color: #002E5B;
-        color: #ffffff;
-        border-radius: 4px;
-        text-align: center;
-        font-weight: lighter;
-        margin: 0px 20px 15px 20px;
-        padding: 5px 0px;
-        display: inline-block;
-    }
 
         .index-content .blue-button:hover {
             background-color: #dadada;
@@ -100,3 +89,28 @@ body {
         margin-top: 20px;
     }
 }
+
+.create-type-btn {
+    background-color: #DB8EBF;
+    color: white;
+}
+.type-card {
+    margin-bottom: 3rem;
+}
+
+    .type-card h4 {
+        text-align: center;
+        margin: 0 !important;
+    }
+    .type-card .card-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .type-card .card-buttons .edit-btn {
+            margin: 1rem;
+        }
+
+        .type-card .card-buttons .delete-btn {
+            margin: 1rem;
+        }

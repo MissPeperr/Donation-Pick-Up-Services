@@ -7,29 +7,20 @@
 <h2>Viewing Donation Categories</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="create-type-btn btn btn-danger" asp-action="Create">New Category</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ItemTypeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ItemTypeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ItemTypeId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="index-content">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="type-card card">
+                <h4>@item.Title</h4>
+                <div class="card-buttons">
+                    <a class="edit-btn btn btn-success" asp-action="Edit" asp-route-id="@item.ItemTypeId">Edit</a>
+                    <a class="delete-btn btn btn-danger" asp-action="Delete" asp-route-id="@item.ItemTypeId">Delete</a>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
