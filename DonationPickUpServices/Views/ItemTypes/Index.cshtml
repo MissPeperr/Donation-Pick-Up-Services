@@ -4,11 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Viewing Donation Categories</h2>
+<div class="info-header">
+    <h2>Viewing Donation Categories</h2>
+    <p>
+        <a class="create-type-btn btn btn-default" asp-action="Create">New Category</a>
+    </p>
+</div>
 
-<p>
-    <a class="create-type-btn btn btn-danger" asp-action="Create">New Category</a>
-</p>
 <div class="index-content">
     @foreach (var item in Model)
     {

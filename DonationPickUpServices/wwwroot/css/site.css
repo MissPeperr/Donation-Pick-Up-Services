@@ -3,7 +3,7 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #4C6EA6;
+    background-color: #6f9ae2;
 }
 
 /*.navbar {
@@ -24,6 +24,9 @@ body {
         left: 0;
         bottom: 0;
         position: fixed;
+    }
+    .body-content h2 {
+        color: #FBFCFC;
     }
 
 
@@ -90,8 +93,9 @@ body {
     }
 }
 
-.create-type-btn {
+.info-header .create-type-btn {
     background-color: #DB8EBF;
+    border-color: #cd75ad;
     color: white;
 }
 .type-card {
