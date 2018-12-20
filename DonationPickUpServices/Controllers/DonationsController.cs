@@ -34,19 +34,24 @@ namespace DonationPickUpServices.Controllers
             DonationIndexViewModel viewModel = new DonationIndexViewModel();
             var user = await GetCurrentUserAsync();
 
+            // if there is nobody logged in
             if(user == null)
             {
                 return View("../Home/LoginError");
             }
+            // if the user is an employee
             else if(user.UserTypeId == 2)
             {
-                List<Donation> allDonations = _context.Donations
+                var allDonations = _context.Donations
                     .Include(d => d.Status)
+                    .Include(d => d.Items)
+                    .Include(d => d.ApplicationUser)
                     .ToList();
 
                 viewModel.Donations = allDonations;
                 return View(viewModel);
             }
+            // if the user is a customer
             else if(user.UserTypeId == 4)
             {
                 var allItems = _context.Items
