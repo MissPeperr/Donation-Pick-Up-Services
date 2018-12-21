@@ -125,7 +125,7 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
                 <td></td>
                 <td>
                     @* This will be how the employee changes the status, on Donations/Details *@
-                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
+                    <a class="btn btn-success" asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
                 </td>
             </tr>
 
