@@ -74,7 +74,7 @@
         </tbody>
     </table>
 }
-else if (user.UserTypeId == 2)
+else if (user.UserTypeId == 2 || user.UserTypeId == 1)
 {
     <table class="table">
         <thead>
@@ -84,6 +84,9 @@ else if (user.UserTypeId == 2)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Donation.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Item.ItemType)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => user.Address)
@@ -109,13 +112,13 @@ else if (user.UserTypeId == 2)
                         @Html.DisplayFor(modelItem => j.ItemType.Title)
                     </td>
 
-                    @if (j.ApplicationUserId == Model.AppUser.Id)
+                    @if (j.ApplicationUserId == donation.ApplicationUserId)
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => Model.AppUser.Address) <br />
-                            @Html.DisplayFor(modelItem => Model.AppUser.City),
-                            @Html.DisplayFor(modelItem => Model.AppUser.State) <br />
-                            @Html.DisplayFor(modelItem => Model.AppUser.ZipCode)
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.Address) <br />
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.City),
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.State) <br />
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.ZipCode)
                         </td>
                     }
                 }
@@ -129,4 +132,8 @@ else if (user.UserTypeId == 2)
                 }
         </tbody>
     </table>
+}
+else
+{
+    <h4>You goofed somewhere</h4>
 }

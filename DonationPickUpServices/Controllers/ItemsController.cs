@@ -56,8 +56,13 @@ namespace DonationPickUpServices.Controllers
         }
 
         // GET: Items/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var user = await GetCurrentUserAsync();
+            if(user == null)
+            {
+                return View("../Home/LoginError");
+            }
             ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             ViewData["DonationId"] = new SelectList(_context.Donations, "DonationId", "DonationId");
             ViewData["ItemTypeId"] = new SelectList(_context.ItemTypes, "ItemTypeId", "Title");

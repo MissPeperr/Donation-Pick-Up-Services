@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DonationPickUpServices.Data;
 using DonationPickUpServices.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DonationPickUpServices.Controllers
 {
@@ -14,15 +15,31 @@ namespace DonationPickUpServices.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ItemTypesController(ApplicationDbContext context)
+        public ItemTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
+
+        // Create variable to represent User Data
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        // Create component to get current user from the _userManager variable
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: ItemTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ItemTypes.ToListAsync());
+            var user = await GetCurrentUserAsync();
+            if(user == null || user.UserTypeId == 4)
+            {
+                return View("../Home/LoginError");
+            }
+            else if (user.UserTypeId == 2 || user.UserTypeId == 1)
+            {
+                return View(await _context.ItemTypes.ToListAsync());
+            }
+            return View("../Home/LoginError");
         }
 
         // GET: ItemTypes/Details/5

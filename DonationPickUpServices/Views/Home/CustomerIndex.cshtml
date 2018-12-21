@@ -1,4 +1,9 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{ var user = await UserManager.GetUserAsync(User);}
+
 @{
     ViewData["Title"] = "CustomerIndex";
 }
@@ -12,13 +17,16 @@
                 </div>
             </div>
         </a>
-        <a asp-controller="Donations" asp-action="Index">
-            <div class="col-lg-4">
-                <div class="card">
-                    <h4>See Previous Donations</h4>
+        @if (user != null)
+        {
+           <a asp-controller="Donations" asp-action="Index">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <h4>See Previous Donations</h4>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        }
     </div>
 </div>
 
