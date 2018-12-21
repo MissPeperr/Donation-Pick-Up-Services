@@ -87,6 +87,7 @@ namespace DonationPickUpServices.Controllers
             var donation = await _context.Donations
                 .Include(d => d.Status)
                 .Include(d => d.Items)
+                .Include(d => d.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.DonationId == id);
             if (donation == null)
             {

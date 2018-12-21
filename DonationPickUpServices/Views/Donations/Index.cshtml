@@ -86,10 +86,10 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
                     @Html.DisplayNameFor(model => model.Donation.Status)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Item.ItemType)
+                    @Html.DisplayNameFor(model => user.Address)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => user.Address)
+                    Customer
                 </th>
             </tr>
         </thead>
@@ -108,9 +108,6 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
 
                 @foreach (var j in donation.Items)
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => j.ItemType.Title)
-                    </td>
 
                     @if (j.ApplicationUserId == donation.ApplicationUserId)
                     {
@@ -120,12 +117,15 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
                             @Html.DisplayFor(modelItem => donation.ApplicationUser.State) <br />
                             @Html.DisplayFor(modelItem => donation.ApplicationUser.ZipCode)
                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser)
+                        </td>
                     }
                 }
                 <td></td>
                 <td>
                     @* This will be how the employee changes the status, on Donations/Details *@
-                    <a class="btn btn-success" asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
                 </td>
             </tr>
 

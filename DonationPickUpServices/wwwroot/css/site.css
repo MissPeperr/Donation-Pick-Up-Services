@@ -120,11 +120,11 @@ body {
         }
 
 .table tr:nth-child(odd) {
-    background-color: #eee;
+    background-color: #c4d9fd;
 }
 
 .table tr:nth-child(even) {
-    background-color: #fff;
+    background-color: #ebf1fb;
 }
 .table th {
     background-color: #6F9AE2;
