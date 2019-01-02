@@ -130,6 +130,11 @@ namespace DonationPickUpServices.Controllers
             }
 
             var donation = await _context.Donations.FindAsync(id);
+            //var donation = await _context.Donations
+            //    .Include(d => d.Status)
+            //    .Include(d => d.Items)
+            //    .Include(d => d.ApplicationUser)
+            //    .FirstOrDefaultAsync(m => m.DonationId == id);
             if (donation == null)
             {
                 return NotFound();
@@ -143,17 +148,28 @@ namespace DonationPickUpServices.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DonationId,DateCreated,DateCompleted,StatusId")] Donation donation)
+        public async Task<IActionResult> Edit(int id, Donation donation)
         {
             if (id != donation.DonationId)
             {
                 return NotFound();
             }
 
+            var user = await GetCurrentUserAsync();
+
+            // removing the UserId and DonationId from the ModelState so the ModelState is Valid
+            ModelState.Remove("ApplicationUserId");
+            ModelState.Remove("ApplicationUser");
+            //ModelState.Remove("DonationId");
+
+            // ModelState is NOT valid at the current moment
             if (ModelState.IsValid)
             {
                 try
                 {
+                    donation.DateCompleted = DateTime.Now;
+                    donation.ApplicationUser = donation.ApplicationUser;
+                    donation.ApplicationUserId = donation.ApplicationUserId;
                     _context.Update(donation);
                     await _context.SaveChangesAsync();
                 }
@@ -168,7 +184,7 @@ namespace DonationPickUpServices.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return View("Details");
             }
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Title", donation.StatusId);
             return View(donation);
@@ -209,7 +225,45 @@ namespace DonationPickUpServices.Controllers
             return _context.Donations.Any(e => e.DonationId == id);
         }
 
-        public async Task<IActionResult> Cancel(int? id)
+        //// Using this method caused an error FYI
+        //[HttpPost, ActionName("Edit")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> UpdateStatus(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var donation = await _context.Donations.FirstOrDefaultAsync(d => d.DonationId == id);
+        //    if (await TryUpdateModelAsync<Donation>(
+        //        donation, "",
+        //        d => d.StatusId))
+        //    {
+        //        try
+        //        {
+        //            donation.DateCompleted = DateTime.Now;
+        //            _context.Update(donation);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!DonationExists(donation.DonationId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return View(donation);
+        //    }
+        //    ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Title", donation.StatusId);
+        //    return View(donation);
+        //}
+
+            public async Task<IActionResult> Cancel(int? id)
         {
             if (id == null)
             {
