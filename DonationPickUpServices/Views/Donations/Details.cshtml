@@ -1,21 +1,40 @@
 ﻿@model DonationPickUpServices.Models.Donation
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h2>Donation Details</h2>
+@{ var user = await UserManager.GetUserAsync(User);}
+
+<h2>Viewing Donation Details</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
+        @if(user.UserTypeId == 2 || user.UserTypeId == 1)
+        {
+            <dt>
+                Customer Info
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ApplicationUser.FirstName)
+                @Html.DisplayFor(model => model.ApplicationUser.LastName) <br />
+                @Html.DisplayFor(model => model.ApplicationUser.Address) <br />
+                @Html.DisplayFor(model => model.ApplicationUser.City),
+                @Html.DisplayFor(model => model.ApplicationUser.State) <br />
+                @Html.DisplayFor(model => model.ApplicationUser.ZipCode)
+            </dd>
+        }
         <dt>
             @Html.DisplayNameFor(model => model.DateCreated)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DateCreated)
         </dd>
-        @if(Model.DateCompleted != null)
+        @if (Model.DateCompleted != null)
         {
             <dt>
                 @Html.DisplayNameFor(model => model.DateCompleted)
@@ -34,7 +53,7 @@
         <dt>
             Items in Donation
         </dt>
-        @foreach(var item in Model.Items)
+        @foreach (var item in Model.Items)
         {
             <dd>
                 @Html.DisplayFor(model => item.Title)
@@ -44,8 +63,9 @@
 </div>
 <div>
     <a class="btn btn-default" asp-action="Index"><i class="fas fa-arrow-left"></i>  Back to Donations</a>  |
-    @if(Model.StatusId == 1)
+    @if (Model.StatusId == 1 && user.UserTypeId == 4)
     {
         <a class="btn btn-danger" asp-action="Cancel" asp-route-id="@Model.DonationId">Cancel</a>
     }
+    <a class="btn btn-success" asp-action="Edit" asp-route-id="@Model.DonationId">Update Status</a>
 </div>

@@ -118,3 +118,15 @@ body {
         .type-card .card-buttons .delete-btn {
             margin: 1rem;
         }
+
+.table tr:nth-child(odd) {
+    background-color: #c4d9fd;
+}
+
+.table tr:nth-child(even) {
+    background-color: #ebf1fb;
+}
+.table th {
+    background-color: #6F9AE2;
+    color: #FBFCFC;
+}

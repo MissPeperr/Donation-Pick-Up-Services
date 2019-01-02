@@ -86,10 +86,10 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
                     @Html.DisplayNameFor(model => model.Donation.Status)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Item.ItemType)
+                    @Html.DisplayNameFor(model => user.Address)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => user.Address)
+                    Customer
                 </th>
             </tr>
         </thead>
@@ -101,16 +101,34 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
                 <td>
                     @Html.DisplayFor(modelItem => donation.DateCreated)
                 </td>
+                @if (donation.StatusId == 1)
+                {
+                    <td style="color: black; font-weight: 700;">
+                        @Html.DisplayFor(modelItem => donation.Status.Title)
+                    </td>
+                }
+                else if (donation.StatusId == 2)
+                {
+                    <td style="color: black; font-weight: 700;">
+                        @Html.DisplayFor(modelItem => donation.Status.Title)
+                    </td>
+                }
+                else if (donation.StatusId == 3)
+                {
+                    <td style="color: forestgreen; font-weight: 700;">
+                        @Html.DisplayFor(modelItem => donation.Status.Title)
+                    </td>
+                }
+                else if (donation.StatusId == 4)
+                {
+                    <td style="color: orangered; font-weight: 700;">
+                        @Html.DisplayFor(modelItem => donation.Status.Title)
+                    </td>
+                }
 
-                <td>
-                    @Html.DisplayFor(modelItem => donation.Status.Title)
-                </td>
 
                 @foreach (var j in donation.Items)
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => j.ItemType.Title)
-                    </td>
 
                     @if (j.ApplicationUserId == donation.ApplicationUserId)
                     {
@@ -120,12 +138,15 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
                             @Html.DisplayFor(modelItem => donation.ApplicationUser.State) <br />
                             @Html.DisplayFor(modelItem => donation.ApplicationUser.ZipCode)
                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => donation.ApplicationUser.LastName)
+                        </td>
                     }
                 }
                 <td></td>
                 <td>
                     @* This will be how the employee changes the status, on Donations/Details *@
-                    <a asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@donation.DonationId">Details</a>
                 </td>
             </tr>
 

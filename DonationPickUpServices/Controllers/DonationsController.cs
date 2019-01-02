@@ -87,6 +87,7 @@ namespace DonationPickUpServices.Controllers
             var donation = await _context.Donations
                 .Include(d => d.Status)
                 .Include(d => d.Items)
+                .Include(d => d.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.DonationId == id);
             if (donation == null)
             {
@@ -129,6 +130,11 @@ namespace DonationPickUpServices.Controllers
             }
 
             var donation = await _context.Donations.FindAsync(id);
+            //var donation = await _context.Donations
+            //    .Include(d => d.Status)
+            //    .Include(d => d.Items)
+            //    .Include(d => d.ApplicationUser)
+            //    .FirstOrDefaultAsync(m => m.DonationId == id);
             if (donation == null)
             {
                 return NotFound();
@@ -149,11 +155,23 @@ namespace DonationPickUpServices.Controllers
                 return NotFound();
             }
 
+
+            // removing the UserId and DonationId from the ModelState so the ModelState is Valid
+            ModelState.Remove("ApplicationUserId");
+            ModelState.Remove("ApplicationUser");
+            ModelState.Remove("DateCompleted");
+            ModelState.Remove("DateCreated");
+            //ModelState.Remove("DonationId)
+
+
+            var currentDonation = await _context.Donations.FindAsync(id);
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(donation);
+                    currentDonation.StatusId = donation.StatusId;
+                    _context.Update(currentDonation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -167,10 +185,10 @@ namespace DonationPickUpServices.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = currentDonation.DonationId });
             }
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Title", donation.StatusId);
-            return View(donation);
+            return View(currentDonation);
         }
 
         // GET: Donations/Delete/5
@@ -208,7 +226,45 @@ namespace DonationPickUpServices.Controllers
             return _context.Donations.Any(e => e.DonationId == id);
         }
 
-        public async Task<IActionResult> Cancel(int? id)
+        //// Using this method caused an error FYI
+        //[HttpPost, ActionName("Edit")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> UpdateStatus(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var donation = await _context.Donations.FirstOrDefaultAsync(d => d.DonationId == id);
+        //    if (await TryUpdateModelAsync<Donation>(
+        //        donation, "",
+        //        d => d.StatusId))
+        //    {
+        //        try
+        //        {
+        //            donation.DateCompleted = DateTime.Now;
+        //            _context.Update(donation);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!DonationExists(donation.DonationId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return View(donation);
+        //    }
+        //    ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Title", donation.StatusId);
+        //    return View(donation);
+        //}
+
+            public async Task<IActionResult> Cancel(int? id)
         {
             if (id == null)
             {
