@@ -148,29 +148,30 @@ namespace DonationPickUpServices.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Donation donation)
+        public async Task<IActionResult> Edit(int id, [Bind("DonationId,DateCreated,DateCompleted,StatusId")] Donation donation)
         {
             if (id != donation.DonationId)
             {
                 return NotFound();
             }
 
-            var user = await GetCurrentUserAsync();
 
             // removing the UserId and DonationId from the ModelState so the ModelState is Valid
             ModelState.Remove("ApplicationUserId");
             ModelState.Remove("ApplicationUser");
-            //ModelState.Remove("DonationId");
+            ModelState.Remove("DateCompleted");
+            ModelState.Remove("DateCreated");
+            //ModelState.Remove("DonationId)
 
-            // ModelState is NOT valid at the current moment
+
+            var currentDonation = await _context.Donations.FindAsync(id);
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    donation.DateCompleted = DateTime.Now;
-                    donation.ApplicationUser = donation.ApplicationUser;
-                    donation.ApplicationUserId = donation.ApplicationUserId;
-                    _context.Update(donation);
+                    currentDonation.StatusId = donation.StatusId;
+                    _context.Update(currentDonation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -184,10 +185,10 @@ namespace DonationPickUpServices.Controllers
                         throw;
                     }
                 }
-                return View("Details");
+                return RedirectToAction("Details", new { id = currentDonation.DonationId });
             }
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "Title", donation.StatusId);
-            return View(donation);
+            return View(currentDonation);
         }
 
         // GET: Donations/Delete/5
