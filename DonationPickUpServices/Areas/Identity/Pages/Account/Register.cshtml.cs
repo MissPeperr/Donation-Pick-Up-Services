@@ -57,9 +57,11 @@ namespace DonationPickUpServices.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
+            [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
+            [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
             [Required]
@@ -72,9 +74,11 @@ namespace DonationPickUpServices.Areas.Identity.Pages.Account
             public string State { get; set; }
 
             [Required]
+            [Display(Name = "Zipcode")]
             public string ZipCode { get; set; }
 
             [Required]
+            [Display(Name = "Phone Number")]
             public string UserPhoneNumber { get; set; }
 
         }

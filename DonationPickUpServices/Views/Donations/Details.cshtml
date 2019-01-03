@@ -17,7 +17,7 @@
         @if(user.UserTypeId == 2 || user.UserTypeId == 1)
         {
             <dt>
-                Customer Info
+                Customer Info:
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.ApplicationUser.FirstName)
@@ -29,7 +29,7 @@
             </dd>
         }
         <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
+            @Html.DisplayNameFor(model => model.DateCreated):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DateCreated)
@@ -37,7 +37,7 @@
         @if (Model.DateCompleted != null)
         {
             <dt>
-                @Html.DisplayNameFor(model => model.DateCompleted)
+                @Html.DisplayNameFor(model => model.DateCompleted):
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.DateCompleted)
@@ -45,13 +45,13 @@
 
         }
         <dt>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => model.Status):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Status.Title)
         </dd>
         <dt>
-            Items in Donation
+            Items in Donation:
         </dt>
         @foreach (var item in Model.Items)
         {

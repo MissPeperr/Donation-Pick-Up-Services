@@ -14,6 +14,7 @@ namespace DonationPickUpServices.Models
         public int ItemId { get; set; }
 
         [Required]
+        [Display(Name = "Being Donated:")]
         public string Title { get; set; }
 
         [Required]
@@ -21,6 +22,7 @@ namespace DonationPickUpServices.Models
 
         // this is in lbs
         [Required]
+        [Display(Name ="Approximate Weight (lbs)")]
         public int Weight { get; set; }
 
         [Required]

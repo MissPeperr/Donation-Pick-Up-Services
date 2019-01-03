@@ -40,9 +40,32 @@
                     @Html.DisplayFor(modelItem => donation.DateCreated)
                 </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => donation.Status.Title)
-                </td>
+                @if (donation.StatusId == 1)
+                {
+                    <td style="color: darkslategray; font-weight: 700;">
+                        @Html.DisplayFor(modelItem => donation.Status.Title)
+                    </td>
+                }
+                else if (donation.StatusId == 2)
+                {
+                    <td style="color: darkorange; font-weight: 700;">
+                        @Html.DisplayFor(modelItem => donation.Status.Title)
+                    </td>
+                }
+                else if (donation.StatusId == 3)
+                {
+                    <td style="color: forestgreen; font-weight: 700;">
+                        @Html.DisplayFor(modelItem => donation.Status.Title)
+                        <i class="far fa-check-circle"></i>
+                    </td>
+                }
+                else if (donation.StatusId == 4)
+                {
+                    <td style="color: darkred; font-weight: 700;">
+                        @Html.DisplayFor(modelItem => donation.Status.Title)
+                        <i class="far fa-times-circle"></i>
+                    </td>
+                }
 
                 @foreach (var j in donation.Items)
                 {
@@ -63,7 +86,7 @@
                 <td></td>
                 <td>
                     <a class="btn btn-primary" asp-action="Details" asp-route-id="@donation.DonationId">Details</a> |
-                    @if(donation.StatusId == 1)
+                    @if (donation.StatusId == 1)
                     {
                         <a class="btn btn-danger" asp-action="Cancel" asp-route-id="@donation.DonationId">Cancel</a>
                     }
@@ -103,13 +126,13 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
                 </td>
                 @if (donation.StatusId == 1)
                 {
-                    <td style="color: black; font-weight: 700;">
-                        @Html.DisplayFor(modelItem => donation.Status.Title)
-                    </td>
+                <td style="color: darkslategray; font-weight: 700;">
+                    @Html.DisplayFor(modelItem => donation.Status.Title)
+                </td>
                 }
                 else if (donation.StatusId == 2)
                 {
-                    <td style="color: black; font-weight: 700;">
+                    <td style="color: darkorange; font-weight: 700;">
                         @Html.DisplayFor(modelItem => donation.Status.Title)
                     </td>
                 }
@@ -117,12 +140,14 @@ else if (user.UserTypeId == 2 || user.UserTypeId == 1)
                 {
                     <td style="color: forestgreen; font-weight: 700;">
                         @Html.DisplayFor(modelItem => donation.Status.Title)
+                    <i class="far fa-check-circle"></i>
                     </td>
                 }
                 else if (donation.StatusId == 4)
                 {
-                    <td style="color: orangered; font-weight: 700;">
+                    <td style="color: darkred; font-weight: 700;">
                         @Html.DisplayFor(modelItem => donation.Status.Title)
+                        <i class="far fa-times-circle"></i>
                     </td>
                 }
 

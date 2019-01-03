@@ -29,6 +29,18 @@ body {
         color: #FBFCFC;
     }
 
+#login-div {
+    color: #FBFCFC;
+}
+    #login-div #login-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+#register-div {
+    color: #FBFCFC;
+}
+
 
 /* QR code generator */
 #qrCode {
